@@ -51,9 +51,10 @@ public class RegistroUsuarios extends HttpServlet {
 		 * salida.println("Contraseña: " + request.getParameter("contraseña"));
 		 * salida.print("<div></div>"); salida.println("Genero: " +
 		 * request.getParameter("gender")); salida.print("<div></div>");
-		 * salida.println("</Body>"); salida.println("</html>");
+		 * salida.println("</Body>"); salida.println("</html>");nombre
 		 */
 		String correo = request.getParameter("correo");
+		String nombre = request.getParameter("nombre");
 		String contraseña = request.getParameter("Password");
 		// String contrase = "aaa";
 		/*

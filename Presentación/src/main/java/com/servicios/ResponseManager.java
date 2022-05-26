@@ -50,44 +50,49 @@ public class ResponseManager extends HttpServlet {
 		String contraseña = request.getParameter("Password");
 		// String contrase= "aaa";
 
-		if (loginB(correo, contraseña)) {
-			// enviar una cookie al browser
-			HttpSession session = request.getSession(true);
-			session.setAttribute("loggedIn", new String("true"));
-			// Redirigir a otro servlet para realizar las operaciones
-			// salida.println("<HTML>"+myPojo.getMessage());
-			salida.println("<HTML>");
-			salida.println("<HEAD>");
-			salida.println("<TITLE>Bienvenido</TITLE>");
-			salida.println("</HEAD>");
-			salida.println("<BODY>");
-			salida.println("<P>Bienvenido a nuestra Farmacia.</P>");
-			salida.println("Tipo de cuenta: " + request.getParameter("account"));
-			salida.print("<br></br>");
-			salida.println("Nombre introducido: " + request.getParameter("nombre"));
-			salida.print("<br></br>");
-			salida.println("Correo: " + request.getParameter("correo"));
-			salida.print("<br></br>");
-			salida.println("Contraseña: " + request.getParameter("contraseña"));
-			salida.print("<br></br>");
-			salida.println("Genero: " + request.getParameter("gender"));
-			salida.print("<br></br>");
-			salida.println("</BODY>");
-			salida.println("</HTML>");
+		try {
+			if (loginB(correo, contraseña)) {
+				// enviar una cookie al browser
+				HttpSession session = request.getSession(true);
+				session.setAttribute("loggedIn", new String("true"));
+				// Redirigir a otro servlet para realizar las operaciones
+				// salida.println("<HTML>"+myPojo.getMessage());
+				salida.println("<HTML>");
+				salida.println("<HEAD>");
+				salida.println("<TITLE>Bienvenido</TITLE>");
+				salida.println("</HEAD>");
+				salida.println("<BODY>");
+				salida.println("<P>Bienvenido a nuestra Farmacia.</P>");
+				salida.println("Tipo de cuenta: " + request.getParameter("account"));
+				salida.print("<br></br>");
+				salida.println("Nombre introducido: " + request.getParameter("nombre"));
+				salida.print("<br></br>");
+				salida.println("Correo: " + request.getParameter("correo"));
+				salida.print("<br></br>");
+				salida.println("Contraseña: " + request.getParameter("contraseña"));
+				salida.print("<br></br>");
+				salida.println("Genero: " + request.getParameter("gender"));
+				salida.print("<br></br>");
+				salida.println("</BODY>");
+				salida.println("</HTML>");
 
-			javax.servlet.http.Cookie[] cookies = request.getCookies();
-			int length = cookies.length;
+				javax.servlet.http.Cookie[] cookies = request.getCookies();
+				int length = cookies.length;
 
-			if (length > 0 && cookies != null) {
-				for (int i = 0; i < length; i++) {
-					javax.servlet.http.Cookie cookie = cookies[i];
-					salida.println("<B>Cookie Name:</B> " + cookie.getName() + "<BR>");
-					salida.println("<B>Cookie Value:</B> " + cookie.getValue() + "<BR>");
+				if (length > 0 && cookies != null) {
+					for (int i = 0; i < length; i++) {
+						javax.servlet.http.Cookie cookie = cookies[i];
+						salida.println("<B>Cookie Name:</B> " + cookie.getName() + "<BR>");
+						salida.println("<B>Cookie Value:</B> " + cookie.getValue() + "<BR>");
+					}
 				}
-			}
 
-		} else {
-			salida.println("Cliente NO conectado, redirigir a LOGIN.");
+			} else {
+				salida.println("Cliente NO conectado, redirigir a LOGIN.");
+			}
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		// salida.println(login(correo,contraseña));
@@ -147,9 +152,8 @@ public class ResponseManager extends HttpServlet {
 		return 0;
 	}
 
-	public boolean loginB(String correo, String contraseña) {
+	public boolean loginB(String nombre, String contraseña) throws NoSuchMethodException {
 
-		
 		// TODO Auto-generated method stub
 		/*
 		 * try { GestorSolicitudes gestorSolicitudes = new GestorSolicitudes(); } catch
@@ -159,24 +163,21 @@ public class ResponseManager extends HttpServlet {
 		 * (correo.equalsIgnoreCase("danki")&&contraseña.equalsIgnoreCase("aaa")) {
 		 * return true; }else
 		 */
-		try {
-			GestorSolicitudes gestorSolicitudes = new GestorSolicitudes();
-		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
 
-		if
-		  (correo.equalsIgnoreCase("danki")&&contraseña.equalsIgnoreCase("aaa")) {
-		  return true;
-		  
-		  }
-		else
+		GestorSolicitudes gestorSolicitudes = new GestorSolicitudes();
+		if ((gestorSolicitudes.GestorSolicitudes(nombre) == true)) {
+			return true;
+
+		} else
 			return false;
-		
+		/*
+		if ((nombre.equalsIgnoreCase("Eles") && contraseña.equalsIgnoreCase("aaa"))
+				&& gestorSolicitudes.GestorSolicitudes(correo) == true) {
+			return true;
+
+		} else
+			return false;*/
+
 	}
 
 	/**
