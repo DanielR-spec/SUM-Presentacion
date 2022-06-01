@@ -42,7 +42,10 @@ public class Controlador extends HttpServlet {
 		Usuario user = new Usuario();
 		//user.setName((String) servletContext.getAttribute("userNamer"));
 		//user.setPassword((String) servletContext.getAttribute("password"));
-		user.setText(gestorSolicitudesSrlvt.getUser());
+		
+		String name = request.getParameter("username");
+		String pass = request.getParameter("pass");
+		user.setText(gestorSolicitudesSrlvt.getUser(name,pass));
 
 		if (user.getText()!=null) {
 			user.setIsValid(true);
@@ -73,6 +76,7 @@ public class Controlador extends HttpServlet {
 				ServletContext servletContext = this.getServletContext();
 				servletContext.setAttribute("UserName", request.getParameter("username"));
 				servletContext.setAttribute("Password", request.getParameter("pass"));
+				servletContext.setAttribute("User", user.getText());
 				
 				Cookie c1 = new Cookie("userName", request.getParameter("username")); 
 				Cookie c2 = new Cookie("password", request.getParameter("pass")); 

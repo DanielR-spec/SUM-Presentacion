@@ -26,15 +26,13 @@ public class GestorSolicitudesSrlvt {
 	public GestorSolicitudesSrlvt() {
 		// TODO Auto-generated constructor stub
 	}
-	public String getUser () {
+	public String getUser (String usr, String pss) {
 		
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
-		WebTarget target = client.target(getBaseURI());
+		WebTarget target = client.target(getBaseURI()).path("auth").queryParam("user", usr).queryParam("psswr", pss);
 		
-		String response = target.request()
-				.accept(MediaType.APPLICATION_JSON)
-				.get(String.class);
+		String response = target.request().accept(MediaType.TEXT_PLAIN).get(String.class);
 			
 		return response;
 		

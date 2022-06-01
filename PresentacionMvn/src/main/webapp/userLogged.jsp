@@ -36,6 +36,7 @@
 			}
  %></h3>
 			
+			<h2>BackendInfo: <% out.println(this.getServletContext().getAttribute("User")); %> </h2>
 
          </center>
 
