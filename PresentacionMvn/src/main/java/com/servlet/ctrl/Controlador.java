@@ -40,69 +40,66 @@ public class Controlador extends HttpServlet {
 		// TODO Auto-generated method stub
 		GestorSolicitudesSrlvt gestorSolicitudesSrlvt = new GestorSolicitudesSrlvt();
 		Usuario user = new Usuario();
-		//user.setName((String) servletContext.getAttribute("userNamer"));
-		//user.setPassword((String) servletContext.getAttribute("password"));
-		
+		// user.setName((String) servletContext.getAttribute("userNamer"));
+		// user.setPassword((String) servletContext.getAttribute("password"));
+
 		String name = request.getParameter("username");
 		String pass = request.getParameter("pass");
-		user.setText(gestorSolicitudesSrlvt.getUser(name,pass));
+		user.setText(gestorSolicitudesSrlvt.getUser(name, pass));
 
-		if (user.getText()!=null) {
+		if (user.getText().equals("AccesToken")) {
+
 			user.setIsValid(true);
 
 		}
-		/*
-		try {
-			//ServletContext servletContext = this.getServletContext();
-			//Enumeration attributes = servletContext.getAttributeNames();
 
-			Usuario user = new Usuario();
-			//user.setName((String) servletContext.getAttribute("userNamer"));
-			//user.setPassword((String) servletContext.getAttribute("password"));
-			user.setText(gestorSolicitudesSrlvt.getUser());
+		if (user.getIsValid()) {
 
-			if (user.getText()!=null) {
-				user.setIsValid(true);
+			ServletContext servletContext = this.getServletContext();
+			servletContext.setAttribute("UserName", request.getParameter("username"));
+			servletContext.setAttribute("Password", request.getParameter("pass"));
+			servletContext.setAttribute("User", user.getText());
 
-			}
-			/*
-			 * request.setAttribute("Usr", user); RequestDispatcher dispatch =
-			 * request.getRequestDispatcher("/Controlador"); dispatch.forward(request,
-			 * response);
-			 */
+			Cookie c1 = new Cookie("userName", request.getParameter("username"));
+			Cookie c2 = new Cookie("password", request.getParameter("pass"));
+			response.addCookie(c1);
+			response.addCookie(c2);
 
-			if (user.getIsValid()) {
-				
-				ServletContext servletContext = this.getServletContext();
-				servletContext.setAttribute("UserName", request.getParameter("username"));
-				servletContext.setAttribute("Password", request.getParameter("pass"));
-				servletContext.setAttribute("User", user.getText());
-				
-				Cookie c1 = new Cookie("userName", request.getParameter("username")); 
-				Cookie c2 = new Cookie("password", request.getParameter("pass")); 
-				response.addCookie(c1); 
-				response.addCookie(c2);
-
-				HttpSession session = request.getSession(true);
-				session.setAttribute("currentSessionUser", user);
-				response.sendRedirect("userLogged.jsp"); // logged-in page
-			}
-
-			else
-				response.sendRedirect("invalidLogin.jsp"); // error page
-		}
-/*
-		catch (Throwable theException) {
-			System.out.println(theException+"HolaLindo");
-		}
-
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+			HttpSession session = request.getSession(true);
+			session.setAttribute("currentSessionUser", user);
+			response.sendRedirect("userLogged.jsp"); // logged-in page
+		} else
+			response.sendRedirect("login.html"); // error page
 
 	}
+	/*
+	 * try { //ServletContext servletContext = this.getServletContext();
+	 * //Enumeration attributes = servletContext.getAttributeNames();
+	 * 
+	 * Usuario user = new Usuario(); //user.setName((String)
+	 * servletContext.getAttribute("userNamer")); //user.setPassword((String)
+	 * servletContext.getAttribute("password"));
+	 * user.setText(gestorSolicitudesSrlvt.getUser());
+	 * 
+	 * if (user.getText()!=null) { user.setIsValid(true);
+	 * 
+	 * } /* request.setAttribute("Usr", user); RequestDispatcher dispatch =
+	 * request.getRequestDispatcher("/Controlador"); dispatch.forward(request,
+	 * response);
+	 */
 
-	/**
+	/*
+	 * catch (Throwable theException) {
+	 * System.out.println(theException+"HolaLindo"); }
+	 * 
+	 * response.getWriter().append("Served at: ").append(request.getContextPath());
+	 * 
+	 * }
+	 * 
+	 * /**
+	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

@@ -30,7 +30,7 @@ public class GestorSolicitudesSrlvt {
 		
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
-		WebTarget target = client.target(getBaseURI()).path("auth").queryParam("user", usr).queryParam("psswr", pss);
+		WebTarget target = client.target(getBaseURI()).queryParam("user", usr).queryParam("psswr", pss);
 		
 		String response = target.request().accept(MediaType.TEXT_PLAIN).get(String.class);
 			
@@ -53,7 +53,7 @@ public class GestorSolicitudesSrlvt {
 		
 	}    
 	private static URI getBaseURI() {
-        return UriBuilder.fromUri("http://localhost:9080/ApiEndpoint/rest/user").build();
+        return UriBuilder.fromUri("http://localhost:9080/ApiEndpoint/rest/user/auth").build();
     }
 	
 }
